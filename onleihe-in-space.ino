@@ -13,7 +13,7 @@ void setup() {
 }
 
 void loop() {
-  detector.Update();
+  detector.update();
   bool isOccupied = detector.isOccupied();
   
   Serial.println(String(isOccupied));

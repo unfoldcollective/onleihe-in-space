@@ -1,47 +1,43 @@
 #include "Arduino.h"
 
 class OccupancyDetector {
-  // class member variables initialised at startup
-  int in;
-  int out;
-  int delayMS;
+  private:
+    // class member variables
+    int inPin;
+    int outPin;
+    int delayMS;
+    long duration;
+    long distance;
 
-  // sensor vars
-  long duration;
-  long distance;
-
-  // constructor
-  public: OccupancyDetector (int inPin, int outPin, int delayMilliSeconds) {
-    
-    in = inPin;
-    out = outPin;
-    pinMode(out,OUTPUT);
-    pinMode(in,INPUT);
-    delayMS = delayMilliSeconds;
-  }
-
-  void Update() {
-    digitalWrite(out,LOW);
-    delayMicroseconds(2);
-    digitalWrite(out,HIGH);
-    delayMicroseconds(10);
-    digitalWrite(out,LOW);
-    
-    duration = pulseIn(in,HIGH);
-    distance = (duration/2) / 29.1;
-
-    delay(delayMS);
-  }
-
-  int GetDistance(){
-    return distance;
-  }
-
-  bool isOccupied(){
-    if(distance > 0 && distance < 100){
-      return true;
-    } else {
-      return false;
+  
+  public: 
+    // constructor
+    OccupancyDetector (int echoPin, int trigPin, int delayMilliSeconds) {
+      inPin = echoPin;
+      outPin = trigPin;
+      pinMode(outPin,OUTPUT);
+      pinMode(inPin,INPUT);
+      delayMS = delayMilliSeconds;
     }
-  }
+  
+    void update() {
+      digitalWrite(outPin,LOW);
+      delayMicroseconds(2);
+      digitalWrite(outPin,HIGH);
+      delayMicroseconds(10);
+      digitalWrite(outPin,LOW);
+      
+      duration = pulseIn(inPin,HIGH);
+      distance = (duration/2) / 29.1;
+  
+      delay(delayMS);
+    }
+  
+    int getDistance(){
+      return distance;
+    }
+  
+    bool isOccupied(){
+      return distance > 0 && distance < 100;
+    }
 };
