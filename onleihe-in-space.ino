@@ -37,9 +37,7 @@ void loop() {
         
         // TODO: reverse wipe back to default state
         // leds.colorWipeUntil(leds.Color(0, 100, 0), 50, 118);
-  
-        leds.clear();
-        leds.show();
+        leds.wipeOutFrom(60, 50);
         
         // turn on detector
         isDetecting = true;

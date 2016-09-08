@@ -5,7 +5,7 @@
 
 class LedStrip {
   private:
-  Adafruit_NeoPixel leds;
+    Adafruit_NeoPixel leds;
   
   public:
     LedStrip (int ledPin, int ledCount) {
@@ -50,6 +50,16 @@ class LedStrip {
         leds.show();
         delay(wait);
       }
+    }
+
+    void wipeOutFrom(int from, uint8_t wait) {
+      for(int i=from; i>0; i--) {
+        leds.setPixelColor(i, leds.Color(0,0,0));
+        leds.show();
+        delay(wait);
+      }
+      leds.clear();
+      leds.show();
     }
 
     
