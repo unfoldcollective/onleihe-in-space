@@ -4,6 +4,7 @@
 // LedStrip Class wraps Adafruit_NeoPixel class to add custom animations
 
 class LedStrip {
+  private:
   Adafruit_NeoPixel leds;
   
   public:
