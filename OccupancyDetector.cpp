@@ -10,8 +10,9 @@ class OccupancyDetector {
     int delayMS;
     long duration;
     long distance;
-    
-    int QUEUE_SIZE = 10;
+
+    // keep this to powers of 2 {2,4,8,16} etc because of the way QueueArray grows
+    int QUEUE_SIZE = 8;
     TransparentQueueArray <bool> occupationQueue;
   
   public: 
@@ -48,15 +49,21 @@ class OccupancyDetector {
     // return whether occupancy has been continuously detected 
     // for the duration of [delayMS]*[QUEUE_SIZE] ms
     bool detect(){
-      // queue current occupation state
+      // enqueue current occupation state
       occupationQueue.enqueue(isOccupied());
-      if(occupationQueue.count() > QUEUE_SIZE){
+      if(occupationQueue.count() == QUEUE_SIZE){
         occupationQueue.dequeue();
       }
 
+//      for (int i = 0; i <= occupationQueue.count(); i++){
+//        Serial.print(occupationQueue.getContents()[i]);
+//      }
+//      Serial.println();
+      
+
       // check if last n detections where occupied (queue is full of true)      
       bool detected = true;
-      for (int i = 0; i < occupationQueue.count()+6; i++){
+      for (int i = 0; i < occupationQueue.count(); i++){
         if(occupationQueue.getContents()[i] == false){
           detected = false;
         }
