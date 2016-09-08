@@ -1,8 +1,8 @@
 #include "OccupancyDetector.cpp"
 #include "LedStrip.cpp"
 
-OccupancyDetector detector = OccupancyDetector(12, 13, 1000);
-LedStrip leds = LedStrip(4, 119);
+OccupancyDetector detector = OccupancyDetector(12, 13, 100);
+LedStrip leds = LedStrip(4, 120);
 
 void setup() {
   Serial.begin(9600);
@@ -15,12 +15,29 @@ void setup() {
 void loop() {
   detector.update();
   bool isOccupied = detector.isOccupied();
+  bool hasDetected = detector.detect();
   
-  Serial.println(String(isOccupied));
-  
-  // TODO: trigger LED animation based on occupancy detected
+  Serial.println(isOccupied);
+  Serial.println(hasDetected);
+  Serial.println("***");
 
-  leds.colorWipeUntil(leds.Color(255, 255, 255), 50, 60); // White
-  leds.colorWipeUntil(leds.Color(0, 255, 0), 50, 100); // Green
-  
+  if(hasDetected){
+      // TODO: turn off detector
+      // detector.turnOff();
+
+      // animate leds up to level of amount
+      leds.colorWipeUntil(leds.Color(50, 50, 50), 50, 60); // White
+      
+      // pause
+      delay(3000);
+      
+      
+      // TODO: reverse wipe back to default state
+      // leds.colorWipeUntil(leds.Color(0, 100, 0), 50, 118);
+
+      leds.clear();
+      leds.show();
+      // TODO: turn on detector
+      // detector.turnOn();
+  }  
 }
