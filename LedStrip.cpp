@@ -43,7 +43,7 @@ class LedStrip {
     }
 
     // Fill the dots one after the other with a color until specified number
-    void colorWipeUntil(uint32_t c, uint8_t wait, int until) {
+    void colorWipeUntil(uint32_t c, int until, uint8_t wait) {
       for(uint16_t i=0; i<until; i++) {
         leds.setPixelColor(i, c);
         leds.show();
