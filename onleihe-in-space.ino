@@ -17,6 +17,9 @@ OccupancyDetector detector = OccupancyDetector(ECHO_PIN, TRIG_PIN, DETECTOR_DELA
 LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
 
 const uint32_t WHITE  = leds.Color(50, 50, 50);
+const uint32_t GREY   = leds.Color(20, 20, 20);
+const uint32_t BLACK  = leds.Color(0 , 0 , 0 );
+const uint32_t GOETHE = leds.Color(160, 200, 20);
 
 bool isDetecting;
 bool hasDetected;
@@ -36,9 +39,18 @@ void loop() {
     detector.update();
     hasDetected = detector.detect();
     
+    
+    Serial.println(detector.isOccupied());  
     Serial.println(hasDetected);
     Serial.println("***");
     
+    if (detector.isOccupied()) {
+      leds.setPixelColor(1, GOETHE);
+    } else {
+      leds.setPixelColor(1, BLACK);
+    }
+    leds.show();
+  
     if(hasDetected){
         // turn off detector
         isDetecting = false;
