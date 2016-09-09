@@ -16,7 +16,7 @@
 OccupancyDetector detector = OccupancyDetector(ECHO_PIN, TRIG_PIN, DETECTOR_DELAY);
 LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
 
-const uint32_t WHITE = leds.Color(50, 50, 50);
+const uint32_t WHITE  = leds.Color(50, 50, 50);
 
 bool isDetecting;
 bool hasDetected;
@@ -38,19 +38,19 @@ void loop() {
     
     Serial.println(hasDetected);
     Serial.println("***");
-  
+    
     if(hasDetected){
         // turn off detector
-         isDetecting = false;
+        isDetecting = false;
 
-        // animate leds up to level of amount
-        leds.colorWipeUntil(WHITE, UP_TO, LED_DELAY); // White
+        // animate leds until level of UP_TO
+        leds.easeInUntil(UP_TO, 3000, WHITE);
         
         // pause
         delay(PAUSE_DELAY);
-        
-        // reverse wipe back to default state
-        leds.wipeOutFrom(UP_TO, LED_DELAY);
+
+        // animate leds down from UP_TO
+        leds.easeOutFrom(UP_TO, 3000, BLACK);
         
         // turn on detector
         isDetecting = true;
