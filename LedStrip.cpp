@@ -123,5 +123,12 @@ class LedStrip {
         delay(wait);
       }
     }
+
+    void colorRange(int from, int to, uint32_t c) {
+      for (int i=from; i <= to; i++) {
+        leds.setPixelColor(i, c);
+      }
+      leds.show();
+    }
 };
 

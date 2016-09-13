@@ -9,7 +9,9 @@
 #define NO_LEDS 90
 
 // LED strip animation settings
-#define UP_TO 80
+#define UP_TO 70
+#define TEXT_START  80
+#define TEXT_END    89
 #define LED_DELAY 50
 #define PAUSE_DELAY 3000
 
@@ -57,9 +59,15 @@ void loop() {
 
         // animate leds until level of UP_TO
         leds.easeInUntil(UP_TO, 3000, WHITE);
+
+        // light up text area
+        leds.colorRange(TEXT_START, TEXT_END, WHITE);
         
         // pause
         delay(PAUSE_DELAY);
+
+        // turn off text area
+        leds.colorRange(TEXT_START, TEXT_END, BLACK);
 
         // animate leds down from UP_TO
         leds.easeOutFrom(UP_TO, 6000, BLACK);
