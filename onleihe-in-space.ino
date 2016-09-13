@@ -62,7 +62,7 @@ void loop() {
         delay(PAUSE_DELAY);
 
         // animate leds down from UP_TO
-        leds.easeOutFrom(UP_TO, 3000, BLACK);
+        leds.easeOutFrom(UP_TO, 6000, BLACK);
         
         // turn on detector
         isDetecting = true;
