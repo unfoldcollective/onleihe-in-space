@@ -39,63 +39,6 @@ class LedStrip {
       leds.setPixelColor(pixelIndex, color);
     }
 
-    // easeIn until pixel number (not index), over duration (ms), in color
-    void easeInUntil(int until, float duration, uint32_t color){
-      until--; // subtract 1 to match LED index
-      ease.setDuration(duration/1000);
-      ease.setTotalChangeInPosition(until);
-      
-      double easedPosition,t=0;
-      int rounded, diff;
-      int nSteps = 100;
-      int last = 0;
-   
-      for(int i=1;i<=nSteps;i++) {
-        easedPosition = ease.easeInOut(t);
-        rounded = round(easedPosition);
-        diff = rounded - last;
-        
-        // light up leds from last to rounded
-        // start from j=1 to skip led at index 0 with broken green channel
-        for (int j=1;j<=diff;j++) {
-          leds.setPixelColor(last + j, color);
-        }
-        leds.show();
-        last = rounded;
-        
-        t += (duration/1000) / nSteps;
-        delay(duration/nSteps);
-      }
-    }
-
-    // easeOut from pixel number (not index), over duration (ms), in color
-    void easeOutFrom(int from, float duration, uint32_t color){
-      ease.setDuration(duration/1000);
-      ease.setTotalChangeInPosition(from);
-      
-      double easedPosition,t=0;
-      int rounded, diff, current;
-      int nSteps = 100;
-      int last = from;
-   
-      for(int i=0;i<=nSteps;i++) {
-        easedPosition = ease.easeInOut(t);
-        rounded = round(easedPosition);
-        diff = rounded - last;
-        current = from - rounded;
-       
-        // turn off leds from current to last
-        for (int j=1;j<=diff;j++) {
-          leds.setPixelColor(current + j, color);
-        }
-        leds.show();
-        last = rounded;
-        
-        t += (duration/1000) / nSteps;
-        delay(duration/nSteps);
-      }
-    }
-
     // Fill the dots one after the other with a color until specified number
     void colorWipeUntil(uint32_t c, int until, uint8_t wait) {
       for(uint16_t i=0; i<until; i++) {
@@ -131,6 +74,38 @@ class LedStrip {
       leds.show();
     }
 
+    // easeIn from pixel until pixel (not index), over duration (ms), in color
+    void easeInRange(int from, int until, float duration, uint32_t color){
+      from--;  // subtract 1 to match LED index
+      until--; 
+      int distance = until-from;
+      int direction = (distance > 0) - (distance < 0); // calculate sign
+      ease.setDuration(duration/1000);
+      ease.setTotalChangeInPosition(abs(distance));
+      
+      double easedPosition,t=0;
+      int rounded, diff, ledIndex;
+      int nSteps = 100;
+      int last = -1;
+   
+      for(int i=0;i<=nSteps;i++) {
+        easedPosition = ease.easeInOut(t);
+        rounded = round(easedPosition);
+        diff = rounded - last;
+        
+        // light up leds from last to rounded
+        for (int j=1;j<=diff;j++) {
+          ledIndex = from+(direction*last)+(direction*j);
+          leds.setPixelColor(ledIndex, color);
+        }
+        leds.show();
+        last = rounded;
+        
+        t += (duration/1000) / nSteps;
+        delay(duration/nSteps);
+      }
+    }
+    
     void fadeOutRangeFromBrightness(int from, int to, int brightness, int duration) {
       int nSteps = 50;
       float dBrightness = 1.0*brightness/nSteps;
