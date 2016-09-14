@@ -130,5 +130,22 @@ class LedStrip {
       }
       leds.show();
     }
+
+    void fadeOutRangeFromBrightness(int from, int to, int brightness, int duration) {
+      int nSteps = 50;
+      float dBrightness = 1.0*brightness/nSteps;
+      int fadeDelay = round(1.0*duration/nSteps);
+      int newBrightness;
+      
+      for (int j=1; j <= nSteps; j++) {
+        newBrightness = round(brightness - (j * dBrightness));
+        for (int i=from; i <= to; i++) {
+          leds.setPixelColor(i, leds.Color(newBrightness,newBrightness,newBrightness));
+        }
+        leds.show();
+        delay(fadeDelay);
+      }
+
+    }
 };
 

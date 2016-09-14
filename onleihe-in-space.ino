@@ -20,8 +20,8 @@ LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
 
 const uint32_t WHITE  = leds.Color(50, 50, 50);
 const uint32_t GREY   = leds.Color(20, 20, 20);
-const uint32_t BLACK  = leds.Color(0 , 0 , 0 );
-const uint32_t GOETHE = leds.Color(160, 200, 20);
+const uint32_t BLACK      = leds.Color(0  , 0  , 0  );
+const uint32_t GOETHE     = leds.Color(160, 200, 20 );
 
 bool isDetecting;
 bool hasDetected;
@@ -36,7 +36,7 @@ void setup() {
   isDetecting = true;
 }
 
-void loop() {
+void loop() { 
   if (isDetecting) {
     detector.update();
     hasDetected = detector.detect();
@@ -65,9 +65,9 @@ void loop() {
         
         // pause
         delay(PAUSE_DELAY);
-
-        // turn off text area
-        leds.colorRange(TEXT_START, TEXT_END, BLACK);
+        
+        // fade out text area
+        leds.fadeOutRangeFromBrightness(TEXT_START, TEXT_END, BNS, 1000);
 
         // animate leds down from UP_TO
         leds.easeOutFrom(UP_TO, 6000, BLACK);
