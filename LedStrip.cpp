@@ -107,7 +107,7 @@ class LedStrip {
     }
     
     void fadeOutRangeFromBrightness(int from, int to, int brightness, int duration) {
-      int nSteps = 50;
+      int nSteps = duration/25;
       float dBrightness = 1.0*brightness/nSteps;
       int fadeDelay = round(1.0*duration/nSteps);
       int newBrightness;
@@ -120,7 +120,6 @@ class LedStrip {
         leds.show();
         delay(fadeDelay);
       }
-
     }
 };
 
