@@ -3,17 +3,17 @@
 
 #define TRIG_PIN 13
 #define ECHO_PIN 12
-#define DETECTOR_DELAY 100
+#define DETECTOR_DELAY 50 // 100
 
 #define LED_PIN 4
 #define NO_LEDS 90
 
 // LED strip animation settings
-#define UP_TO 70
+#define UP_TO 55
 #define TEXT_START  80
 #define TEXT_END    89
 #define LED_DELAY 50
-#define PAUSE_DELAY 3000
+#define PAUSE_DELAY 10000
 
 OccupancyDetector detector = OccupancyDetector(ECHO_PIN, TRIG_PIN, DETECTOR_DELAY);
 LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
