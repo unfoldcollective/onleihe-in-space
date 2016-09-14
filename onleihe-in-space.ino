@@ -30,9 +30,9 @@ bool hasDetected;
 void setup() {
   Serial.begin(9600);
   
-  leds.begin();  // Call this to start up the LED strip.
-  leds.clear();  // turns all LEDs off...
-  leds.show();   // ...but the LEDs don't actually update until you call this.
+  leds.begin();
+  leds.clear();
+  leds.show();
 
   isDetecting = true;
 //  leds.colorRange(  0,89, WHITE);
@@ -42,7 +42,6 @@ void loop() {
   if (isDetecting) {
     detector.update();
     hasDetected = detector.detect();
-    
     
     Serial.println(detector.isOccupied());  
     Serial.println(hasDetected);

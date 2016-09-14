@@ -1,7 +1,6 @@
 #include "Arduino.h"
 #include <TransparentQueueArray.h>
 
-
 class OccupancyDetector {
   private:
     // class member variables
@@ -54,12 +53,6 @@ class OccupancyDetector {
       if(occupationQueue.count() == QUEUE_SIZE){
         occupationQueue.dequeue();
       }
-
-//      for (int i = 0; i <= occupationQueue.count(); i++){
-//        Serial.print(occupationQueue.getContents()[i]);
-//      }
-//      Serial.println();
-      
 
       // check if last n detections where occupied (queue is full of true)      
       bool detected = true;
