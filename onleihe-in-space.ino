@@ -59,7 +59,7 @@ void loop() {
         isDetecting = false;
 
         // animate leds until level of UP_TO
-        leds.easeInUntil(UP_TO, 3000, WHITE);
+        leds.easeInRange(1, UP_TO, 3000, WHITE);
 
         // light up text area
         leds.colorRange(TEXT_START, TEXT_END, WHITE);
@@ -71,7 +71,7 @@ void loop() {
         leds.fadeOutRangeFromBrightness(TEXT_START, TEXT_END, BNS, 1000);
 
         // animate leds down from UP_TO
-        leds.easeOutFrom(UP_TO, 6000, BLACK);
+        leds.easeInRange(UP_TO, 1, 6000, BLACK);
         
         // turn on detector
         isDetecting = true;
