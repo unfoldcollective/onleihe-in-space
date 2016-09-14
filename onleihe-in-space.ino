@@ -18,8 +18,9 @@
 OccupancyDetector detector = OccupancyDetector(ECHO_PIN, TRIG_PIN, DETECTOR_DELAY);
 LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
 
-const uint32_t WHITE  = leds.Color(50, 50, 50);
-const uint32_t GREY   = leds.Color(20, 20, 20);
+const int      BNS        = 50; // BRIGHTNESS
+const uint32_t WHITE      = leds.Color(BNS, BNS, BNS);
+const uint32_t FULLWHITE  = leds.Color(150, 150, 150);
 const uint32_t BLACK      = leds.Color(0  , 0  , 0  );
 const uint32_t GOETHE     = leds.Color(160, 200, 20 );
 
