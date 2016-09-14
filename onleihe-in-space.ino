@@ -35,6 +35,7 @@ void setup() {
   leds.show();   // ...but the LEDs don't actually update until you call this.
 
   isDetecting = true;
+//  leds.colorRange(  0,89, WHITE);
 }
 
 void loop() { 
