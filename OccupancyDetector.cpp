@@ -7,8 +7,10 @@ class OccupancyDetector {
     int inPin;
     int outPin;
     int delayMS;
+    int distanceRange;
     long duration;
     long distance;
+    
 
     // keep this to powers of 2 {2,4,8,16} etc because of the way QueueArray grows
     int QUEUE_SIZE = 8;
@@ -16,12 +18,13 @@ class OccupancyDetector {
   
   public: 
     // constructor
-    OccupancyDetector (int echoPin, int trigPin, int delayMilliSeconds) {
+    OccupancyDetector (int echoPin, int trigPin, int distanceRangeMax, int delayMilliSeconds) {
       inPin = echoPin;
       outPin = trigPin;
       pinMode(outPin,OUTPUT);
       pinMode(inPin,INPUT);
       delayMS = delayMilliSeconds;
+      distanceRange = distanceRangeMax;
     }
   
     void update() {
@@ -42,7 +45,7 @@ class OccupancyDetector {
     }
   
     bool isOccupied(){
-      return distance > 0 && distance < 100;
+      return distance > 0 && distance < distanceRange;
     }
 
     // return whether occupancy has been continuously detected 
