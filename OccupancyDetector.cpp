@@ -13,7 +13,7 @@ class OccupancyDetector {
     
 
     // keep this to powers of 2 {2,4,8,16} etc because of the way QueueArray grows
-    int QUEUE_SIZE = 8;
+    int QUEUE_SIZE = 4;
     TransparentQueueArray <bool> occupationQueue;
   
   public: 

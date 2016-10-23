@@ -3,7 +3,7 @@
 
 #define TRIG_PIN 13
 #define ECHO_PIN 12
-#define DETECTOR_DELAY 50 // 100
+#define DETECTOR_DELAY 60
 #define DISTANCE_RANGE 200
 
 #define LED_PIN 4
@@ -19,7 +19,7 @@
 OccupancyDetector detector = OccupancyDetector(ECHO_PIN, TRIG_PIN, DISTANCE_RANGE, DETECTOR_DELAY);
 LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
 
-const int      BNS        = 50; // BRIGHTNESS
+const int      BNS        = 60; // BRIGHTNESS
 const uint32_t WHITE      = leds.Color(BNS, BNS, BNS);
 const uint32_t FULLWHITE  = leds.Color(150, 150, 150);
 const uint32_t BLACK      = leds.Color(0  , 0  , 0  );
@@ -44,6 +44,7 @@ void loop() {
     detector.update();
     hasDetected = detector.detect();
     
+    Serial.println(detector.getDistance());
     Serial.println(detector.isOccupied());  
     Serial.println(hasDetected);
     Serial.println("***");
@@ -53,17 +54,17 @@ void loop() {
     } else {
       leds.setPixelColor(1, BLACK);
     }
-    leds.show();
+    leds.show();    
   
     if(hasDetected){
         // turn off detector
         isDetecting = false;
 
         // animate leds until level of UP_TO
-        leds.easeInRange(1, UP_TO, 3000, WHITE);
+        leds.easeInRange(1, UP_TO, 3000, GOETHE);
 
         // light up text area
-        leds.colorRange(TEXT_START, TEXT_END, WHITE);
+        leds.colorRange(TEXT_START, TEXT_END, GOETHE);
         
         // pause
         delay(PAUSE_DELAY);
