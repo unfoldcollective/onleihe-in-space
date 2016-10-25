@@ -7,8 +7,12 @@ class LedStrip {
   private:
     Adafruit_NeoPixel leds;
     CubicEase ease;
+    unsigned long previousMillisBlink = 0;
+    bool blinkBool;
   
   public:
+    bool isFading = true;
+    
     LedStrip (int ledPin, int ledCount) {
       leds = Adafruit_NeoPixel(ledCount, ledPin, NEO_GRB + NEO_KHZ800);
     }
@@ -39,39 +43,24 @@ class LedStrip {
       leds.setPixelColor(pixelIndex, color);
     }
 
-    // Fill the dots one after the other with a color until specified number
-    void colorWipeUntil(uint32_t c, int until, uint8_t wait) {
-      for(uint16_t i=0; i<until; i++) {
-        leds.setPixelColor(i, c);
-        leds.show();
-        delay(wait);
-      }
-    }
-    
-    void wipeOutFrom(int from, uint8_t wait) {
-      for(int i=from; i>0; i--) {
-        leds.setPixelColor(i, leds.Color(0,0,0));
-        leds.show();
-        delay(wait);
-      }
-      leds.clear();
-      leds.show();
-    }
-
-    // Fill the dots one after the other with a color
-    void colorWipe(uint32_t c, uint8_t wait) {
-      for(uint16_t i=0; i<leds.numPixels(); i++) {
-        leds.setPixelColor(i, c);
-        leds.show();
-        delay(wait);
-      }
-    }
-
     void colorRange(int from, int to, uint32_t c) {
       for (int i=from; i <= to; i++) {
         leds.setPixelColor(i, c);
       }
       leds.show();
+    }
+
+    void blinkRange (unsigned long currentMillis, int from, int to, int interval, uint32_t color1, uint32_t color2){
+      if ((unsigned long)(currentMillis - previousMillisBlink) >= interval) {
+        if (blinkBool) {
+          colorRange(from, to, color1);
+        }
+        else {
+          colorRange(from, to, color2);
+        }
+        blinkBool = !blinkBool;
+        previousMillisBlink = currentMillis;
+      }
     }
 
     // easeIn from pixel until pixel (not index), over duration (ms), in color
