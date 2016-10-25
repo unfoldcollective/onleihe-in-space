@@ -16,7 +16,7 @@
 #define LED_DELAY 50
 #define PAUSE_DELAY 10000
 
-OccupancyDetector detector = OccupancyDetector(ECHO_PIN, TRIG_PIN, DISTANCE_RANGE, DETECTOR_DELAY);
+//OccupancyDetector detector = OccupancyDetector(ECHO_PIN, TRIG_PIN, DISTANCE_RANGE, DETECTOR_DELAY);
 LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
 
 const int      BNS        = 60; // BRIGHTNESS
@@ -41,20 +41,22 @@ void setup() {
 
 void loop() { 
   if (isDetecting) {
-    detector.update();
-    hasDetected = detector.detect();
+//    detector.update();
+//    hasDetected = detector.detect();
     
-    Serial.println(detector.getDistance());
-    Serial.println(detector.isOccupied());  
-    Serial.println(hasDetected);
-    Serial.println("***");
+//    Serial.println(detector.getDistance());
+//    Serial.println(detector.isOccupied());  
+//    Serial.println(hasDetected);
+//    Serial.println("***");
     
-    if (detector.isOccupied()) {
-      leds.setPixelColor(1, GOETHE);
-    } else {
-      leds.setPixelColor(1, BLACK);
-    }
-    leds.show();    
+//    if (detector.isOccupied()) {
+//      leds.setPixelColor(1, GOETHE);
+//    } else {
+//      leds.setPixelColor(1, BLACK);
+//    }
+//    leds.show();
+
+    hasDetected = true;
   
     if(hasDetected){
         // turn off detector
