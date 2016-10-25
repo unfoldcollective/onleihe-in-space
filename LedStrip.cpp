@@ -7,12 +7,12 @@ class LedStrip {
   private:
     Adafruit_NeoPixel leds;
     CubicEase ease;
+    unsigned long previousMillisFade  = 0;
     unsigned long previousMillisBlink = 0;
+    int currentStepFade=0;
     bool blinkBool;
   
   public:
-    bool isFading = true;
-    
     LedStrip (int ledPin, int ledCount) {
       leds = Adafruit_NeoPixel(ledCount, ledPin, NEO_GRB + NEO_KHZ800);
     }
@@ -108,6 +108,27 @@ class LedStrip {
         }
         leds.show();
         delay(fadeDelay);
+      }
+    }
+
+    void fadeOutRangeFromBrightnessMillis(unsigned long currentMillis, int from, int to, int brightness, int duration){      
+      int intervalFade = 40; // 40 ms == 1/25 second
+      int nSteps = duration / intervalFade;
+      float dBrightness = 1.0*brightness/nSteps;
+      int newBrightness;
+      if ((unsigned long)(currentMillis - previousMillisFade) == intervalFade) {
+        // update the pixels
+        currentStepFade++;
+        newBrightness = round(brightness - (currentStepFade * dBrightness));
+        for (int i=from; i <= to; i++) {
+          leds.setPixelColor(i, leds.Color(newBrightness,newBrightness,newBrightness));
+        }
+        leds.show();
+    
+        if (currentStepFade == nSteps) {
+          currentStepFade = 0;       
+        }
+        previousMillisFade = currentMillis;
       }
     }
 };

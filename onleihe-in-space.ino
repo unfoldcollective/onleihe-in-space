@@ -41,5 +41,6 @@ void loop() {
 
   leds.blinkRange(currentMillis, 0, 2, 1000, WHITE, GOETHE);
   
+  leds.fadeOutRangeFromBrightnessMillis(currentMillis, 5, 10, BNS, 2000);
 }
 
