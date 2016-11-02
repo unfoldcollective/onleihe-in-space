@@ -34,13 +34,14 @@ void setup() {
   leds.show();
 
   isDetecting = true;
+  leds.colorRange(3,6, WHITE);
 }
 
 void loop() {
-  unsigned long currentMillis = millis();
-
-  leds.blinkRange(currentMillis, 0, 2, 1000, WHITE, GOETHE);
-  
-  leds.fadeOutRangeFromBrightnessMillis(currentMillis, 5, 10, BNS, 2000);
+//  unsigned long currentMillis = millis();
+//
+//  leds.blinkRange(currentMillis, 0, 2, 1000, WHITE, GOETHE);
+//  
+//  leds.fadeOutRangeFromBrightnessMillis(currentMillis, 5, 10, BNS, 2000);
 }
 
