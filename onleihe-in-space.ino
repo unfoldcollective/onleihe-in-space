@@ -6,14 +6,15 @@
 #define DETECTOR_DELAY 60
 #define DISTANCE_RANGE 200
 
-#define LED_PIN 4
-#define NO_LEDS 35
+#define LED_PIN 8
+#define NO_LEDS 50
 
 // LED strip animation settings
-#define UP_TO 55
-#define TEXT_START  80
-#define TEXT_END    89
-#define LED_DELAY 50
+#define UP_TO        25
+#define SENSOR_INDEX 25
+#define TEXT_START   80
+#define TEXT_END     89
+#define LED_DELAY    50
 
 LedStrip leds = LedStrip(LED_PIN, NO_LEDS);
 
@@ -34,14 +35,14 @@ void setup() {
   leds.show();
 
   isDetecting = true;
-  leds.colorRange(3,6, WHITE);
+//  leds.colorRange(3,6, WHITE);
 }
 
 void loop() {
-//  unsigned long currentMillis = millis();
-//
-//  leds.blinkRange(currentMillis, 0, 2, 1000, WHITE, GOETHE);
-//  
-//  leds.fadeOutRangeFromBrightnessMillis(currentMillis, 5, 10, BNS, 2000);
+  unsigned long currentMillis = millis();
+  leds.blinkRange(currentMillis, 1, 3, 1000, WHITE, GOETHE);
+  leds.fadeOutRangeFromBrightnessMillis(currentMillis, 5, 10, BNS, 2000);
+//  leds.easeInRangeMillis(currentMillis, 11, 25, 2000, WHITE);
+  leds.easeInRangeMillis(currentMillis, 25, 11, 2000, WHITE);
 }
 
